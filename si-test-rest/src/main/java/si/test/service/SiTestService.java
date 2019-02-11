@@ -6,7 +6,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import si.test.model.Login;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,5 +49,12 @@ public class SiTestService implements HackerDetector {
             }
         }
         return null;
+    }
+
+    public long getInterval(final String time1, final String time2) throws DateTimeParseException, ArithmeticException {
+        final LocalDateTime dateTime1 = LocalDateTime.parse(time1, DateTimeFormatter.RFC_1123_DATE_TIME);
+        final LocalDateTime dateTime2 = LocalDateTime.parse(time2, DateTimeFormatter.RFC_1123_DATE_TIME);
+        final Duration duration = Duration.between(dateTime1, dateTime2);
+        return duration.toMinutes();
     }
 }

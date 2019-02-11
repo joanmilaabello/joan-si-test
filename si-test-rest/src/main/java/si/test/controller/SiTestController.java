@@ -32,4 +32,11 @@ public class SiTestController {
     public String check(@Valid @ApiParam(value = "Login line") @Pattern(regexp = VALIDATION_REGEX) @RequestParam(required = true) final String line) {
         return siTestService.parseLine(line);
     }
+
+    @GetMapping(value = "/interval")
+    @ApiOperation(value = "Gets interval in minutes between two timestamps", response = Boolean.class)
+    public long getInterval(@ApiParam(value = "Timestamp 1") @RequestParam(required = true) final String time1,
+                            @ApiParam(value = "Timestamp 2") @RequestParam(required = true) final String time2) {
+        return siTestService.getInterval(time1, time2);
+    }
 }

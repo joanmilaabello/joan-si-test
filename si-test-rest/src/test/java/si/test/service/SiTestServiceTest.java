@@ -67,4 +67,16 @@ public class SiTestServiceTest {
         given(cacheService.get(login.getIp())).willReturn(Arrays.asList(time1, time2, time3, time4));
         assertEquals(login.getIp(), siTestService.parseLine(request));
     }
+
+    @Test
+    public void getIntervalShouldReturnDifference() {
+        final String date1 = "Thu, 21 Dec 2000 16:01:07 +0200";
+        final String date2 = "Thu, 21 Dec 2000 16:02:06 +0200";
+        final String date3 = "Thu, 21 Dec 2000 16:02:07 +0200";
+        final String date4 = "Thu, 21 Dec 2000 17:02:07 +0200";
+        assertEquals(0, siTestService.getInterval(date1, date2));
+        assertEquals(1, siTestService.getInterval(date1, date3));
+        assertEquals(60, siTestService.getInterval(date3, date4));
+        assertEquals(-60, siTestService.getInterval(date4, date3));
+    }
 }
